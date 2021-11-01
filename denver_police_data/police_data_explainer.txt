@@ -1,5 +1,16 @@
 Police Data
 
-Police data sets contain police data for Denver by specified year. CSV contains date, lat/lon, x/y, stop type (pedestrian or vehicle), and neighborhood. There are also a few police specific columns, these should probably be filtered out. 
+Police data sets contain police data for Denver by specified year. 
+CSV contains date, lat/lon, x/y, stop type (pedestrian or vehicle), and neighborhood. 
+There are also a few police specific columns, these should probably be filtered out. 
 
 Each dataset contains around 100,000 rows and exactly 14 columns.
+
+Project Ideas:
+
+1. Cluster data by neighborhood, then we have a discrete time series of clusters with
+number of assignments changing over time. This paints a picture of how reported crime 
+has been changing over the last several years. 
+
+Note: If we want to keep the number of elements the same in each year then we can take a
+random sample of X number of rows from each line.
