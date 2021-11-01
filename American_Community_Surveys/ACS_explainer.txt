@@ -20,3 +20,9 @@ to make predictions about which neighborhoods are likely to experience gentrific
 Policy decisions for specific neighborhoods can then be extracted. For example, with anticipation that
 a neighborhood may be at risk for experiencing gentrification, we can recommend building low-income housing nearby
 or designing new policy to prevent tenants from being evicted.
+
+Pros: this dataset would be nice to cluster with lower and upper bounds on cluster size, too many items in a cluster
+is nonsense, too few also isn't helpful. Forcing each cluster to be between 10-20 elements (For 78 neighborhoods) 
+gives a nice interpretation of the clusters.
+
+Cons: There are only 3 instances, so we cannot extract a lot of information.
