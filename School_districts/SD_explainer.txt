@@ -1,2 +1,6 @@
 Data: Percent and Number of students on Free or/and Reduced Lunch by CO school district
 Also: Shape files to plot the school districts
+
+Project idea:
+Cluster school districts each year by similarity of students on free and reduced lunch.
+Investigate changes over many years.
