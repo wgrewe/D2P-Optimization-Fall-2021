@@ -1,0 +1,10 @@
+Spotofy Music Data
+
+The Spotify dataset contains the top 50 songs from each year starting in 2010 up through and including 2019. The CSV file contains the song title, artist, genre, year, beats per minute, energy of the song, daceability, decibles, liveness (how likely a song is to be a live recording), valence, length, acousticness, speechiness, and popularity.
+
+This dataset has about 604 entries.
+
+Project ideas:
+We could essentially cluster on any of the attributes of songs and see what the change over time has been like. this could also give inight into the change in attitude of people over time or even be used in determining a good flow of music from one song to another. 
+
+Note, there might be some extra songs included for some years, so for this we could just take a random sample of 50 of the songs from that year.
