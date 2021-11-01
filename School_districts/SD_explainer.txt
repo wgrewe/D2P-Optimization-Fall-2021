@@ -1,0 +1,2 @@
+Data: Percent and Number of students on Free or/and Reduced Lunch by CO school district
+Also: Shape files to plot the school districts
