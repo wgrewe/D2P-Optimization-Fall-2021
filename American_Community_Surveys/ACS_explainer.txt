@@ -1,0 +1,22 @@
+3 instances of the American Community Survey for the City of Denver
+
+All surveys represent a 5 year average of data given at the neighborhood level
+
+Years Included: 2006-2010, 2010-2014, 2015-2019
+
+Each survey includes a lot of data points. 
+Example columns:
+
+
+Project Ideas:
+We can generate a lot of project ideas from this data set, the core method is in (1.)
+
+1. Given a feature such as income level of a neighborhood, cluster neighborhoods by which ones
+have a similar level of income, we could do this through kmeans. Then, we have 3 instances of 
+different clusters of Denver's neighborhoods. Now, we can construct a circuit to understand
+which neighborhoods are gentrifying significantly over the last 15 years. We can also use this 
+to make predictions about which neighborhoods are likely to experience gentrification in the future.
+
+Policy decisions for specific neighborhoods can then be extracted. For example, with anticipation that
+a neighborhood may be at risk for experiencing gentrification, we can recommend building low-income housing nearby
+or designing new policy to prevent tenants from being evicted.
