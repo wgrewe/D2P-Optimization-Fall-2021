@@ -1,5 +1,13 @@
-Admission Data:
+Admission Data: HUGE AMOUNT FOR DATA, more than you wanted to know, more than what feels legal
+Source: College Scorecard
 
-Demographic Data:
+Demographic Data: Broken for the moment
 
 Project Ideas:
+Cluster based on percent in stem majors
+OR Cluster based on income brackets
+OR Cluster on Pell Grant recipients
+
+Pros: Many years of data set
+
+Cons: Not a great visual representation
