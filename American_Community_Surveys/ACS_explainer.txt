@@ -26,3 +26,6 @@ is nonsense, too few also isn't helpful. Forcing each cluster to be between 10-2
 gives a nice interpretation of the clusters.
 
 Cons: There are only 3 instances, so we cannot extract a lot of information.
+
+Can circuit walks answer from where to where are people moving? Impose constriants or objective function that finds a circuit walk for people not moving 
+geographically far. Could be complicated.
