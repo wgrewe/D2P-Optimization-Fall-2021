@@ -8,3 +8,7 @@ Project ideas:
 We could essentially cluster on any of the attributes of songs and see what the change over time has been like. this could also give inight into the change in attitude of people over time or even be used in determining a good flow of music from one song to another. 
 
 Note, there might be some extra songs included for some years, so for this we could just take a random sample of 50 of the songs from that year.
+
+Pros: Easy data to work with, not much to do in terms of cleaning the data and no shortage of things to cluster on
+
+cons: Not very D2P worthy. Not a ton of practical applications. Mostly just intersting to see what results we might get. 
