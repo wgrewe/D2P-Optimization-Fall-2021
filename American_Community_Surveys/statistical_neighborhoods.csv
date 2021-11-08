@@ -49,12 +49,12 @@ NBHD_ID,NBHD_NAME,TYPOLOGY,NOTES
 16,Civic Center,None,None
 10,CBD,None,None
 63,Union Station,None,None
-60,Central Park,None,"Formerly Stapleton, changed August 2020"
+60,Stapleton,None,"Formerly Stapleton, changed August 2020"
 45,Montbello,NEST,None
 42,Lowry Field,None,None
-28,Gateway - Green Valley Ranch,None,None
+28,Gateway / Green Valley Ranch,None,None
 35,Harvey Park South,None,None
-19,College View - South Platte,None,None
+19,College View / South Platte,None,None
 15,City Park West,None,None
 61,Sun Valley,NEST,None
 67,Valverde,NEST,None
