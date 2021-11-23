@@ -18,7 +18,7 @@ def cycles_graph(graph, nodes):
 
 	multi_edge_paths = list(filter(lambda c: len(c) >= 3, paths))
 
-	odd_length_paths = list(filter(lambda c: c[-1] > nodes ,multi_edge_paths))
+	odd_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_edge_paths))
     
 	for i in range(len(odd_length_paths)):
 		odd_length_paths[i].append(odd_length_paths[i][0])
