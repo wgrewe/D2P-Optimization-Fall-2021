@@ -12,8 +12,9 @@ def circuit_walk(vert1,vert2, circuits,B):
 				break;
 		for i in range(len(g)):
 			lamb.append((s[i]-vert2[i])/g[i])
-
-		min_lambda = min(lamb)
+		
+		pos_lamb = list(filter(lambda c: c > 0, lamb))
+		min_lambda = min(pos_lamb)
 
 		s = s+lamb*g
 		u = vert2-s
