@@ -7,7 +7,7 @@ def circuit_walk(vert1,vert2, circuits,B):
 
 	while (s != vert2):
 		for i in range(len(circuits)):
-			if ((B*u)*(B*circuitc[i])>=0):
+			if (B.dot(u).dot(B.dot(circuits[i]))>=0):
 				g = circuits[i]
 				break;
 		for i in range(len(g)):
