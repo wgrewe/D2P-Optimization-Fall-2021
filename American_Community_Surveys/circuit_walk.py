@@ -7,11 +7,11 @@ def circuit_walk(vert1,vert2, circuits,B):
 
 	while (s != vert2):
 		for i in range(len(circuits)):
-			if (B.dot(u).dot(B.dot(circuits[i]))>=0):
+			if (B.dot(u).dot(transpose(B.dot(circuits[i])))>=0):
 				g = circuits[i]
 				break;
 		for i in range(len(g)):
-			lamb[i] = (s[i]-vert2[i])/g[i]
+			lamb.append((s[i]-vert2[i])/g[i])
 
 		min_lambda = min(lamb)
 
