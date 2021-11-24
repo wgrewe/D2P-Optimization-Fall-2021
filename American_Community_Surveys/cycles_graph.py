@@ -18,10 +18,10 @@ def cycles_graph(graph, nodes):
 
 	multi_edge_paths = list(filter(lambda c: len(c) >= 4, paths))
 
-	odd_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_edge_paths))
+	even_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_edge_paths))
     
-	for i in range(len(odd_length_paths)):
-		odd_length_paths[i].append(odd_length_paths[i][0])
-	return odd_length_paths
+	for i in range(len(even_length_paths)):
+		even_length_paths[i].append(even_length_paths[i][0])
+	return even_length_paths
 
 	
