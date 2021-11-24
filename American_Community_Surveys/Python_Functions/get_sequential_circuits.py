@@ -40,7 +40,7 @@ def depthFirst(graph, currentVertex, visited):
     visitedList.append(visited)
     return visitedList
 
-def sequential_graph(graph, nodes):
+def sequential_graph(graph, nodes, clusters):
 	'''
 	input: a graph, and the number of nodes to walk through
 
@@ -79,7 +79,7 @@ def get_sequential_circuits(nodes, clusters):
 	Then add the negative circuit.
 	'''
 	graph = build_graph(nodes, clusters)
-	paths = sequential_graph(graph, nodes)
+	paths = sequential_graph(graph, nodes,clusters)
 
 	num_paths = len(paths)
 	circuits = []
