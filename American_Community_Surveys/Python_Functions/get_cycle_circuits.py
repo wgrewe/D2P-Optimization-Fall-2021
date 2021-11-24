@@ -1,3 +1,4 @@
+import numpy as  np
 def build_graph(nodes, clusters):
 	'''
 	input: number of nodes, number of clusters
