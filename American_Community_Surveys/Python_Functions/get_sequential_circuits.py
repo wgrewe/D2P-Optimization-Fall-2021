@@ -54,15 +54,18 @@ def sequential_graph(graph, nodes):
 	odd length.
 	'''
 	paths = []
-	for i in range(nodes):
+	for i in range(nodes, nodes+clusters):
 		visitedList = []
 		somePaths = depthFirst(graph, i, [])
 		paths += somePaths
 
 	dup_filtered_paths = list(filter(lambda c: c[0] < c[-1], paths))
-	even_length_paths = list(filter(lambda c: len(c) % 2 == 0, dup_filtered_paths))
+	odd_length_paths = list(filter(lambda c: len(c) % 2 == 1, dup_filtered_paths))
 
-	return even_length_paths
+	return odd_length_paths
+
+# 5 neighborhoods [0,..,4], 3 clusters [5, 6, 7]
+# Path example = [5, 0, 6] <- start on cluster/end on cluster
 
 def get_sequential_circuits(nodes, clusters):
 	'''
@@ -84,10 +87,14 @@ def get_sequential_circuits(nodes, clusters):
 	for i in range(num_paths):
 		path = paths[i]
 		pos_circ = np.zeros(nodes*clusters)
-		odd_step = path[::2]
-		even_step = path[1::2]
-		pos_circ[odd_step] = 1
-		pos_circ[even_step] = -1
+
+		#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
+
+		odd_step = [path[i]*clusters + path[i+1] for i in range(0, len(path)-1, 2)]
+		even_step = [path[i]*clusters + path[i+1] for i in range(1, len(path)-1, 2)]
+
+		pos_circ[odd_step] = -1
+		pos_circ[even_step] = 1
 		neg_circ = -1*pos_circ
 		circuits.append(pos_circ)
 		circuits.append(neg_circ)
