@@ -70,7 +70,7 @@ def get_cycle_circuits(nodes,clusters):
 	circuits = []
 
 	for i in range(num_paths):
-		path = paths[i]
+		path = cycles[i]
 		pos_circ = np.zeros(nodes*clusters)
 
 		#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j

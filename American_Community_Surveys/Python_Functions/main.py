@@ -2,8 +2,8 @@ import numpy as np
 import constraint_mat as cm
 import sign_comp_circs as scc
 import circuit_walk as cw
-import cycles_graph as cg
 import get_sequential_circuits as gsc
+import get_cycle_circuits as gcc
 
 nodes = 5
 clusters = 3
@@ -12,10 +12,9 @@ vert1 = [0,0,1,0,1,0,1,0,0,0,0,1,0,1,0]
 vert2 = [0,0,1,1,0,0,1,0,0,1,0,0,0,1,0]
 
 def main(nodes,clusters,vert1,vert2):
-	graph = gsc.build_graph(nodes,clusters)
-	cyc_graph = cg.cycles_graph(graph,nodes)
-	circuits = gsc.get_sequential_circuits(nodes,clusters)
-	#make one for cycles#
+	seq_circuits = gsc.get_sequential_circuits(nodes,clusters)
+	cyc_circuits = gcc.get_cycle_circuits(nodes, clusters)
+	circuits = seq_circuits.append(cyc_circuits)
 	B = cm.constraint_mat(nodes,clusters)
 	sign_comp = scc.sign_comp_circs(vert2-vert1,circuits,B)
 	circ_walk = cw.circuit_walk(vert1,vert2,sign_comp)
