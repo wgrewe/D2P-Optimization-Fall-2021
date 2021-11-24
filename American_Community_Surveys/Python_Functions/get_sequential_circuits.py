@@ -40,11 +40,11 @@ def depthFirst(graph, currentVertex, visited):
     visitedList.append(visited)
     return visitedList
 
-def sequential_graph(graph, nodes, clusters):
+def sequential_paths(graph, nodes, clusters):
 	'''
 	input: a graph, and the number of nodes to walk through
 
-	output: all cycle-free paths in the graph 
+	output: all cycle-free paths in the graph that begin at a cluster
 
 	logic: use the depth first to find all paths starting at each vertex.
 	Use filter to remove all duplicated walks. Since walks are cycle free the
@@ -59,10 +59,10 @@ def sequential_graph(graph, nodes, clusters):
 		somePaths = depthFirst(graph, i, [])
 		paths += somePaths
 
-	dup_filtered_paths = list(filter(lambda c: c[0] < c[-1], paths))
-	odd_length_paths = list(filter(lambda c: len(c) % 2 == 1, dup_filtered_paths))
+	filter_dup_paths = list(filter(lambda c: c[0] < c[-1], paths))
+	even_length_paths = list(filter(lambda c: len(c) % 2 == 1, filter_dup_paths))
 
-	return odd_length_paths
+	return even_length_paths
 
 # 5 neighborhoods [0,..,4], 3 clusters [5, 6, 7]
 # Path example = [5, 0, 6] <- start on cluster/end on cluster
@@ -79,9 +79,10 @@ def get_sequential_circuits(nodes, clusters):
 	Then add the negative circuit.
 	'''
 	graph = build_graph(nodes, clusters)
-	paths = sequential_graph(graph, nodes,clusters)
+	paths = sequential_paths(graph, nodes, clusters)
 
 	num_paths = len(paths)
+	print(num_paths)
 	circuits = []
 
 	for i in range(num_paths):
@@ -90,8 +91,8 @@ def get_sequential_circuits(nodes, clusters):
 
 		#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
 
-		odd_step = [path[i]*clusters + path[i+1] for i in range(0, len(path)-1, 2)]
-		even_step = [path[i]*clusters + path[i+1] for i in range(1, len(path)-1, 2)]
+		odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(0, len(path)-1, 2)]
+		even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(1, len(path)-1, 2)]
 
 		pos_circ[odd_step] = -1
 		pos_circ[even_step] = 1
