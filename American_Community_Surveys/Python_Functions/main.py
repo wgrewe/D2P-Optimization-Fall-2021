@@ -23,5 +23,5 @@ def main(nodes,clusters,vert1,vert2):
 
 
 if __name__ == '__main__':
-	main(nodes,clusters)
+	main(nodes,clusters,vert1,vert2)
 
