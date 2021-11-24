@@ -12,13 +12,13 @@ def circuit_walk(vert1,vert2, circuits):
 	picked_circs = []
 	lamb = []
 	g = 0
+	count = 0
 
 	while (s != vert2):
-		for i in range(len(circuits)):
-			if (circuit[i] not in picked_circs):
-				g = circuits[i]
-				picked_circs.append(g)
-				break;
+		for i in range(count,len(circuits)):
+			g = circuits[i]
+			count +=1
+			break;
 		for i in range(len(g)):
 			if (u[i] != 0):
 				lamb.append((s[i]-vert2[i])/g[i])
