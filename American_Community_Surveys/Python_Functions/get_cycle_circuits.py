@@ -75,8 +75,8 @@ def get_cycle_circuits(nodes,clusters):
 
 		#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
 
-		odd_step = [path[i]*clusters + path[i+1] for i in range(0, len(path)-1, 2)]
-		even_step = [path[i]*clusters + path[i+1] for i in range(1, len(path)-1, 2)]
+		odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(0, len(path)-1, 2)]
+		even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(1, len(path)-1, 2)]
 
 		pos_circ[odd_step] = -1
 		pos_circ[even_step] = 1
