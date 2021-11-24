@@ -1,3 +1,40 @@
+def build_graph(nodes, clusters):
+	'''
+	input: number of nodes, number of clusters
+
+	output: complete bipartite graph with vertices labeled 0,..,nodes-1 for 
+	elements on the left and nodes,...,clusters-1 for elements on the right
+
+	logic: represent graph as a dictionary, each left node connects to every 
+	right node and vice versa. Just fill out dictionary using for-loops
+	'''
+	graph = {}
+	for i in range(nodes):
+		graph[i] = [nodes + j for j in range(clusters)]
+	for j in range(clusters):
+		graph[nodes + j] = [i for i in range(nodes)]
+	return graph
+
+# initialize visitedList solely to test depthFirst on its own
+visitedList = []
+def depthFirst(graph, currentVertex, visited):
+    '''
+	input: a graph, a starting vertex, and a list of nodes already visited.
+	Typical input should be graph, the starting vertex, and [].
+	
+	output: all cycle-free paths in the graph that start with 
+	visited + currentVertex
+	
+	logic: use recursion to find all paths. Start at currentVertex and traverse
+	to next vertex if not already visited. When path cant continue, just add to
+	visitedList
+	'''
+    visited.append(currentVertex)
+    for vertex in graph[currentVertex]:
+        if vertex not in visited:
+            depthFirst(graph, vertex, visited.copy())
+    visitedList.append(visited)
+    return visitedList
 def cycles_graph(graph, nodes):
 	'''
 	input: a graph, and the number of nodes to walk through
