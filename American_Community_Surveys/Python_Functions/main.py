@@ -8,19 +8,27 @@ import get_cycle_circuits as gcc
 nodes = 5
 clusters = 3
 visitedList= []
-vert1 = [0,0,1,0,1,0,1,0,0,0,0,1,0,1,0]
-vert2 = [0,0,1,1,0,0,1,0,0,1,0,0,0,1,0]
+circuits = []
+vert1 = np.array([0,0,1,0,1,0,1,0,0,0,0,1,0,1,0])
+vert2 = np.array([0,0,1,1,0,0,1,0,0,1,0,0,0,1,0])
 
 def main(nodes,clusters,vert1,vert2):
 	seq_circuits = gsc.get_sequential_circuits(nodes,clusters)
-	cyc_circuits = gcc.get_cycle_circuits(nodes, clusters)
-	circuits = seq_circuits.append(cyc_circuits)
+	cyc_circuits = gcc.get_cycle_circuits(nodes,clusters)
+	print('num seq circuits',type(seq_circuits))
+	print('num cycle circuits',type(cyc_circuits))
+	circuits = seq_circuits+cyc_circuits
+	print('type for circuits',type(circuits))
+	print('len of circuits',len(circuits))
 	B = cm.constraint_mat(nodes,clusters)
-	sign_comp = scc.sign_comp_circs(vert2-vert1,circuits,B)
-	circ_walk = cw.circuit_walk(vert1,vert2,sign_comp)
+	# sign_comp = scc.sign_comp_circs(vert2-vert1,circuits,B)
+	circ_walk = cw.circuit_walk(vert1,vert2,circuits,B)
+	print(len(circ_walk))
+	print(circ_walk)
 	return circ_walk
 
 
 if __name__ == '__main__':
 	main(nodes,clusters,vert1,vert2)
+
 

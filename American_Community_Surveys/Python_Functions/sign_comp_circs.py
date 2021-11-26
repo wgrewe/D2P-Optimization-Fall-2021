@@ -1,3 +1,4 @@
+import numpy as  np
 def sign_comp_circs(vertex, circuits, B):
 	'''
 	Input: vertex, set of circuits, constraint matrix B
@@ -5,6 +6,7 @@ def sign_comp_circs(vertex, circuits, B):
 	'''
 	sign_comp_circs = []
 	for i in circuits:
-		if (B.dot(vertex)).dot(transpose(B.dot(i)))>=0:
+		if (B.dot(vertex)).dot(np.transpose(B.dot(i)))>=0:
 			sign_comp_circs.append(i)
+	print('sign_comp finished')
 	return sign_comp_circs

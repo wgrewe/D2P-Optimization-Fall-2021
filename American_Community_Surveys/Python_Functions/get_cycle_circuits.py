@@ -46,21 +46,22 @@ def cycles_graph(graph, nodes):
 	Lastly, add in the start node to the end of each list to represent the cluster node returning to the start node of the cycle. 
 	'''
 	paths = []
-	multi_edge_paths = []
-	odd_length_paths = []
 	for i in range(nodes):
 		visitedList = []
 		somePaths = depthFirst(graph, i, [])
-		paths += somePaths
+		paths+=somePaths 
+        
+	multi_vertex_paths = list(filter(lambda c: len(c) >= 4, paths))
+	even_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_vertex_paths))
 
-	multi_edge_paths = list(filter(lambda c: len(c) >= 4, paths))
-
-	even_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_edge_paths))
+	paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
+	dup_removed = list(paths_set)
+	final_cycles = [list(ele) for ele in dup_removed]
     
-	for i in range(len(even_length_paths)):
-		even_length_paths[i].append(even_length_paths[i][0])
-	return even_length_paths
-
+	for i in range(len(final_cycles)):
+		final_cycles[i].append(final_cycles[i][0])  
+        
+	return final_cycles
 
 def get_cycle_circuits(nodes,clusters):
 	graph = build_graph(nodes,clusters)
@@ -75,12 +76,15 @@ def get_cycle_circuits(nodes,clusters):
 
 		#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
 
-		odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(0, len(path)-1, 2)]
-		even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(1, len(path)-1, 2)]
+		odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(1, len(path)-1, 2)]
+		even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(0, len(path)-1, 2)]
 
 		pos_circ[odd_step] = -1
 		pos_circ[even_step] = 1
 		neg_circ = -1*pos_circ
 		circuits.append(pos_circ)
 		circuits.append(neg_circ)
+	# print('cycles',cycles)
+	# print()
+	# print('circuits',circuits)
 	return circuits
