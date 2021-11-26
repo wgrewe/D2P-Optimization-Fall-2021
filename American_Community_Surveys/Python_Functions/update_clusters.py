@@ -36,7 +36,17 @@ def update_clusters(cluster, circuit):
 
 	return new_cluster_labels 
 
-def change_labels(circuit, num_nodes):
+def cluster_to_circuit(cluster, num_clusters):
+	circuit = np.zeros(len(cluster)*num_clusters)
+	
+	for i in range(len(cluster)):
+		circuit[(i*num_clusters)+cluster[i]] = 1
+
+	return circuit
+
+
+
+def circuit_to_cluster(circuit, num_nodes):
 	'''
 	input: A circuit <list int>, the number of neighborhoods/nodes etc.
 
@@ -58,8 +68,6 @@ def change_labels(circuit, num_nodes):
 				labels[i] = 1
 
 	return labels
-
-print(change_labels([1, 0, -1, 0, -1, 1, 0, 0, 0, 1, -1, 0, 0, 0, 0], 5))
 
 
 def plot_clusters(dataset, clusters, shapefile, title = "Plot of Clusters"):
@@ -90,7 +98,6 @@ def plot_clusters(dataset, clusters, shapefile, title = "Plot of Clusters"):
 	plot.plot(column='CLUSTER', cmap='Blues', linewidth=1, ax=ax, edgecolor='0.9', legend = True)
 	ax.axis('off')
 	fig.suptitle(title, fontsize=16)
-
 
 
 
