@@ -81,10 +81,7 @@ def get_cycle_circuits(nodes,clusters):
 
 		pos_circ[odd_step] = -1
 		pos_circ[even_step] = 1
-		neg_circ = -1*pos_circ
+		# neg_circ = -1*pos_circ
 		circuits.append(pos_circ)
-		circuits.append(neg_circ)
-	# print('cycles',cycles)
-	# print()
-	# print('circuits',circuits)
+		# circuits.append(neg_circ)
 	return circuits
