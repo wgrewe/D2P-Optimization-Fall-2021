@@ -17,18 +17,19 @@ def circuit_walk(vert1,vert2, circuits,B):
 	while (any(s != vert2)):
 		for i in circuits:
 			if list(i) not in picked_circs:
-				Bu= B.dot(u)
-				Bg=B.dot(i)
-				if (Bu).dot(np.transpose(Bg))>0:
+				Bu = B.dot(u)
+				Bg = B.dot(i)
+				sc_check = list(filter(lambda c: c < 0, Bu*Bg))
+				if not sc_check:
 					vertex_zeros = set(np.where(Bu == 0)[0])
 					g_zeros = set(np.where(Bg == 0)[0])
 					if vertex_zeros.issubset(g_zeros):
 						g = i
 						picked_circs.append(list(g))
 						print('g picked')
-						break;
-		for i in range(len(g)):
-			if (g[i] !=0):
+						break
+		for i in g:
+			if i != 0:
 				lamb.append((vert2[i]-s[i])/g[i])
 		
 		print('point g', g)
