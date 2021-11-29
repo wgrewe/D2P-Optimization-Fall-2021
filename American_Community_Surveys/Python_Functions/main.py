@@ -22,7 +22,7 @@ circuits = []
 # 2015_vert = ctv.cluster_to_vector(2015_clust,clusters)
 
 vert1 = np.array([1,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,1])
-vert2 = np.array([1,0,0,1,0,0,1,0,0,0,0,1,0,0,1,1,0,0])
+vert2 = np.array([1,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,1,0])
 
 def main(nodes,clusters,vert1,vert2):
 	seq_circuits = gsc.get_sequential_circuits(nodes,clusters)
