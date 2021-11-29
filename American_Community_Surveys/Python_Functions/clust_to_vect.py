@@ -11,10 +11,3 @@ def cluster_to_vector(cluster_assign, num_clusters):
 	correct_vec =np.reshape(binary_assignments,(1,num_nodes*num_clusters)) 	
 
 	return correct_vec
-
-num_clusters = 3
-
-test = [1,2,1,2,3,1,3,3]
-
-cluster_vec = cluster_to_vector(test,num_clusters)
-print(cluster_vec)
