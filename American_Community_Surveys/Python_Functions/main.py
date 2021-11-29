@@ -1,5 +1,5 @@
 import numpy as np
-# import pandas as pd
+import pandas as pd
 import constraint_mat as cm
 import sign_comp_circs as scc
 import circuit_walk as cw
@@ -13,13 +13,13 @@ clusters = 3
 visitedList= []
 circuits = []
 # ###import cluster assignments from a CSV
-# 2006_clust = pd.read_csv()
-# 2010_clust = pd.read_csv()
-# 2015_clust =  pd.read_csv()
+cluster_06 = np.array(pd.read_csv('2006_clusters.csv'))
+cluster_10 = np.array(pd.read_csv('2010_clusters.csv'))
+cluster_15 =  np.array(pd.read_csv('2015_clusters.csv'))
 # ##convert cluster assignments to vectors in the polyhedron space
-# 2006_vert = ctv.cluster_to_vector(2006_clust,clusters)
-# 2010_vert = ctv.cluster_to_vector(2010_clust,clusters)
-# 2015_vert = ctv.cluster_to_vector(2015_clust,clusters)
+vert_06 = ctv.cluster_to_vector(cluster_06,clusters)
+vert_10 = ctv.cluster_to_vector(cluster_10,clusters)
+vert_15 = ctv.cluster_to_vector(cluster_15,clusters)
 
 vert1 = np.array([1,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,1])
 vert2 = np.array([1,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,1,0])
