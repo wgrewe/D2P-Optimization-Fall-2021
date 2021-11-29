@@ -28,8 +28,8 @@ def circuit_walk(vert1,vert2, circuits,B):
 						picked_circs.append(list(g))
 						print('g picked')
 						break
-		for i in g:
-			if i != 0:
+		for i in range(len(g)):
+			if g[i] != 0:
 				lamb.append((vert2[i]-s[i])/g[i])
 		
 		print('point g', g)
