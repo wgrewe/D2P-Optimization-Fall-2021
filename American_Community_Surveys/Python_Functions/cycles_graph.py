@@ -35,7 +35,7 @@ def depthFirst(graph, currentVertex, visited):
             depthFirst(graph, vertex, visited.copy())
     visitedList.append(visited)
     return visitedList
-def cycles_graph(graph, nodes):
+def cycles_graph(graph, nodes, clusters, B):
 	'''
 	Input: a graph, and the number of nodes to walk through
 	Output: all simple cycles paths in the graph 
@@ -48,7 +48,7 @@ def cycles_graph(graph, nodes):
 	paths = []
 	visitedList = []
     
-	for i in range(nodes):
+	for i in range(clusters):
 		somePaths = depthFirst(graph, i, [])
 		paths+=somePaths 
         
@@ -57,9 +57,28 @@ def cycles_graph(graph, nodes):
 	removed_dups = [] 
 	[removed_dups.append(x) for x in even_length_paths if x not in removed_dups]
     
-	for i in range(len(removed_dups)):
-		removed_dups[i].append(removed_dups[i][0])  
+	for path in removed_dups:
+		path.append(path[0])  
         
 	return removed_dups
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

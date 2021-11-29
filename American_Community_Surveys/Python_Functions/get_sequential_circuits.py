@@ -100,6 +100,7 @@ def get_sequential_circuits(nodes, clusters):
 		circuits.append(pos_circ)
 		circuits.append(neg_circ)
 
+	print("Seq Circuits Finished")
 	return circuits
 
 

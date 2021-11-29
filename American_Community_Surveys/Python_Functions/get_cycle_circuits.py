@@ -1,4 +1,5 @@
 import numpy as  np
+import itertools as it
 def build_graph(nodes, clusters):
 	'''
 	input: number of nodes, number of clusters
@@ -12,6 +13,7 @@ def build_graph(nodes, clusters):
 		graph[i] = [nodes + j for j in range(clusters)]
 	for j in range(clusters):
 		graph[nodes + j] = [i for i in range(nodes)]
+	print("graph built")
 	return graph
 
 # initialize visitedList solely to test depthFirst on its own
@@ -45,88 +47,69 @@ def cycles_graph(graph, nodes, clusters):
 	since this corresponds to an odd number of edges. 
 	Lastly, add in the start node to the end of each list to represent the cluster node returning to the start node of the cycle. 
 	'''
-	print('cycle paths started') 
 	paths = []
-	# Bu = B_mat.dot(vert)
-	# vertex_zeros = set(np.where(Bu == 0)[0])
-	for i in range(nodes,nodes+clusters):
+	for i in range(clusters-1):
 		visitedList = []
-		somePaths = depthFirst(graph, i, [])
-		paths +=somePaths
-
-
+		somePaths = depthFirst(graph, nodes+i, [])
+		paths+=somePaths
+		print("cycles for cluster ", i, "found") 
+        
 	multi_vertex_paths = list(filter(lambda c: len(c) >= 4, paths))
 	even_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_vertex_paths))
-	somePaths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
-	dup_removed = list(somePaths_set)
-	final_paths = [list(ele) for ele in dup_removed]
-
-	for m in final_paths:
-		m.append(m[0])
-
-	print('cycle paths finished')
-	return final_paths
-
-		# circuits = []
-		# for j in range(len(final_paths)):
-		# 	circuits = []
-		# 	path = final_paths[j]
-		# 	pos_circ = np.zeros(nodes*clusters)
-
-		# 	#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
-
-		# 	odd_step = [path[j+1]*clusters + (path[j] - nodes) for j in range(0, len(path)-1, 2)]
-		# 	even_step = [path[j]*clusters + (path[j+1] - nodes) for j in range(1, len(path)-1, 2)]
-
-		# 	pos_circ[odd_step] = -1
-		# 	pos_circ[even_step] = 1
-		# 	neg_circ = -1*pos_circ
-		# 	circuits.append(pos_circ)
-		# 	circuits.append(neg_circ)
-		# 	for k in circuits:
-		# 		# print(Bu.shape)
-		# 		Bg = B_mat.dot(k.reshape(nodes*clusters,1))
-		# 		# print(Bg.shape)
-		# 		sc_check = list(filter(lambda c: c < 0, np.multiply(Bu,Bg)))
-		# 		if not sc_check:
-		# 			g_zeros = set(np.where(Bg == 0)[0])
-		# 			if vertex_zeros.issubset(g_zeros):
-		# 				final_circuits.append(k)
-		# 				print('cycle circuit added')
-
-		# paths+=final_paths 
-        
-	# multi_vertex_paths = list(filter(lambda c: len(c) >= 4, paths))
-	# even_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_vertex_paths))
-
-	# paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
-	# dup_removed = list(paths_set)
-	# final_cycles = [list(ele) for ele in dup_removed]
+	final_cycles = even_length_paths
+	# final_cycles = list(set(even_length_paths))
+	paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
+	dup_removed = list(paths_set)
+	final_cycles = [list(ele) for ele in dup_removed]
     
-	# for i in range(len(final_cycles)):
-	# 	final_cycles[i].append(final_cycles[i][0]) 
-
-
+	for cycle in final_cycles:
+		cycle.append(cycle[0])  
+   
+	# print("Graph Cycles Found")
+	return final_cycles
 
 def get_cycle_circuits(nodes,clusters):
 	graph = build_graph(nodes,clusters)
-	cycles = cycles_graph(graph,nodes,clusters)
-
-	num_paths = len(cycles)
+	print("Graph Built")
+	cycles = cycles_graph(graph,nodes, clusters)
+	print("Cycles Finished")
+	print(len(cycles), " cycles found")
 	circuits = []
 
-	for i in range(num_paths):
-		path = cycles[i]
-		pos_circ = np.zeros(nodes*clusters)
+	for path in cycles:
+		pos_circ = [0]*(nodes*clusters)
 
 		#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
 
 		odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(0, len(path)-1, 2)]
 		even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(1, len(path)-1, 2)]
 
-		pos_circ[odd_step] = -1
-		pos_circ[even_step] = 1
+		for i in odd_step:
+			pos_circ[i] = -1
+		for i in even_step:
+			pos_circ[i] = 1
 		neg_circ = -1*pos_circ
 		circuits.append(pos_circ)
 		circuits.append(neg_circ)
-	return circuits
+	print("Finished creating circuits. Now deduplicating.")
+
+	circuits.sort()
+	print("finished sorting")
+	final_circuits = list(k for k,_ in it.groupby(circuits))
+
+	# circuits_set = set(map(tuple,circuits))  #need to convert the inner lists to tuples so they are hashable
+	# print("converted to set")
+	# circ_list = list(paths_set)
+	# print("Back to a list of tuples")
+	# final_circuits = list(map(list,circ_list))
+	print("Cycle Circuits Finished")
+	print(len(final_circuits), " total circuits")
+	return final_circuits
+
+
+
+
+
+
+
+
