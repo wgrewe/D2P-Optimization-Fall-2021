@@ -1,5 +1,5 @@
 import numpy as np
-def circuit_walk(vert1,vert2, circuits,B):
+def circuit_walk(nodes,clusters,vert1,vert2, circuits,B):
 	'''
 	Input: starting vertex, ending vertex, and a set of sign compatiable circuits with the starting vertex.
 	Output: A set of ciruits in roder of their walk from the startin vertex to the ending vertex
@@ -14,11 +14,12 @@ def circuit_walk(vert1,vert2, circuits,B):
 	lamb = []
 	g = 0
 
-	while (any(s != vert2)):
+	print('circuit walk started')
+	while (any(s.reshape(nodes*clusters,1) != vert2.reshape(nodes*clusters,1))):
 		for i in circuits:
 			if list(i) not in picked_circs:
 				Bu = B.dot(u)
-				Bg = B.dot(i)
+				Bg = B.dot(i.reshape(nodes*clusters,1))
 				sc_check = list(filter(lambda c: c < 0, Bu*Bg))
 				if not sc_check:
 					vertex_zeros = set(np.where(Bu == 0)[0])
@@ -32,10 +33,10 @@ def circuit_walk(vert1,vert2, circuits,B):
 			if g[i] != 0:
 				lamb.append((vert2[i]-s[i])/g[i])
 		
-		print('point g', g)
-		print('point s', s)
-		print('point u', u)
-		print('end vertex', vert2)
+		# print('point g', g)
+		# print('point s', s)
+		# print('point u', u)
+		# print('end vertex', vert2)
 
 		pos_lamb = list(filter(lambda c: c > 0, lamb))
 		# if len(pos_lamb)>0:
