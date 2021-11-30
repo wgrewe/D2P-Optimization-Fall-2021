@@ -1,6 +1,7 @@
 # Get the sequential path moves
 
 import numpy as np
+import itertools as it
 
 def build_graph(nodes, clusters):
 	'''
@@ -61,6 +62,9 @@ def sequential_paths(graph, nodes, clusters):
 
 	filter_dup_paths = list(filter(lambda c: c[0] < c[-1], paths))
 	even_length_paths = list(filter(lambda c: len(c) % 2 == 1, filter_dup_paths))
+	# paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
+	# dup_removed = list(paths_set)
+	# final_paths = [list(ele) for ele in dup_removed]
 
 	return even_length_paths
 
@@ -85,23 +89,47 @@ def get_sequential_circuits(nodes, clusters):
 	print(num_paths)
 	circuits = []
 
-	for i in range(num_paths):
-		path = paths[i]
-		pos_circ = np.zeros(nodes*clusters)
+	for path in paths:
+		pos_circ = [0]*(nodes*clusters)
 
 		#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
 
 		odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(0, len(path)-1, 2)]
 		even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(1, len(path)-1, 2)]
 
-		pos_circ[odd_step] = -1
-		pos_circ[even_step] = 1
-		neg_circ = -1*pos_circ
+		for i in odd_step:
+			pos_circ[i] = -1
+		for i in even_step:
+			pos_circ[i] = 1
+		neg_circ = [-1*x for x in pos_circ]
+
 		circuits.append(pos_circ)
 		circuits.append(neg_circ)
+	print("Finished creating circuits. Now deduplicating.")
+
+	circuits.sort()
+	# print('circuits before groupby',circuits)
+	print("finished sorting")
+	final_circuits = list(k for k,_ in it.groupby(circuits))
+	# print('circuits after groupby',final_circuits)
+
+	# for i in range(num_paths):
+	# 	path = paths[i]
+	# 	pos_circ = np.zeros(nodes*clusters)
+
+	# 	#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
+
+	# 	odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(0, len(path)-1, 2)]
+	# 	even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(1, len(path)-1, 2)]
+
+	# 	pos_circ[odd_step] = -1
+	# 	pos_circ[even_step] = 1
+	# 	neg_circ = -1*pos_circ
+	# 	circuits.append(pos_circ)
+	# 	circuits.append(neg_circ)
 
 	print("Seq Circuits Finished")
-	return circuits
+	return final_circuits
 
 
 

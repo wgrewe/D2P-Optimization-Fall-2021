@@ -76,6 +76,8 @@ def get_cycle_circuits(nodes,clusters):
 	print(len(cycles), " cycles found")
 	circuits = []
 
+
+
 	for path in cycles:
 		pos_circ = [0]*(nodes*clusters)
 
@@ -88,7 +90,8 @@ def get_cycle_circuits(nodes,clusters):
 			pos_circ[i] = -1
 		for i in even_step:
 			pos_circ[i] = 1
-		neg_circ = -1*pos_circ
+		neg_circ = [-1*x for x in pos_circ]
+
 		circuits.append(pos_circ)
 		circuits.append(neg_circ)
 	print("Finished creating circuits. Now deduplicating.")

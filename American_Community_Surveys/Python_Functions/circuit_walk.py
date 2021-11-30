@@ -20,13 +20,21 @@ def circuit_walk(vert1,vert2, circuits, B):
 
 	while not np.array_equiv(curr, end):
 		for g in circuits[count:]:
-			print(g)
+			print('g:', g)
 			count += 1
+
+			# print('len circuits:', len(circuits))
+			# print('count:', count)
+			if count == len(circuits):
+				print('no more circuits to pick')
+				print(circ_set)
 			
 			# Checking Sign Compatibility
 
 			Bg = B.dot(np.array(np.transpose(g)))
-			sc_check1 = list(filter(lambda c: c < 0, (np.transpose(B_end)*np.transpose(Bg))[0]))
+			# print('B_end type', type(np.transpose(B_end)[1]))
+			# print('Bg type', type(np.transpose(Bg)[1]))
+			sc_check1 = list(filter(lambda c: c < 0, (np.transpose(B_end)*np.transpose(Bg))))
 			sc_check2 = list(filter(lambda c: c < 0, end*g))
 			sc_check = sc_check1+sc_check2
 			if not sc_check:
