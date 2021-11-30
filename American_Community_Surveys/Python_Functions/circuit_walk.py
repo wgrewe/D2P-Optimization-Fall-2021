@@ -8,7 +8,7 @@ def circuit_walk(vert1,vert2, circuits, B):
 	one of the vectors in our ending vertex. After these are computed for each compoenntent we keep only the positive values and then pick the smallest one of those. After this
 	we update all variables which is the same as taking the step in the circuit walk. 
 	'''
-	curr = np.zeros(len(vert1))
+	zero = np.zeros(len(vert1))
 	end = vert2-vert1
 	circ_set = []
 	picked_circs = []
@@ -16,9 +16,9 @@ def circuit_walk(vert1,vert2, circuits, B):
 
 	count = 0
 
-	B_end = B.dot(np.transpose(end))
 
-	while not np.array_equiv(curr, end):
+	while not np.array_equiv(zero, end):
+		B_end = B.dot(np.transpose(end))
 		for g in circuits[count:]:
 			print('g:', g)
 			count += 1
@@ -43,7 +43,7 @@ def circuit_walk(vert1,vert2, circuits, B):
 				if vertex_zeros.issubset(g_zeros):
 					#picked_circs.append(list(g))
 					print('circuit selected and added')
-					curr += g
+					end -= g
 					circ_set.append(g)
 					break
 		# Adjustment if not 0/1-polytope
