@@ -36,7 +36,7 @@ def main(nodes,clusters,vert1,vert2):
 	graph = gcc.build_graph(nodes, clusters)
 	cyc_circuits = gcc.get_cycle_circuits(nodes, clusters)
 	# print('cycle circuits:',cyc_circuits)
-	circuits = cyc_circuits+seq_circuits
+	circuits = seq_circuits+cyc_circuits
 	B = cm.constraint_mat(nodes,clusters)
 	circ_walk = cw.circuit_walk(vert1,vert2,circuits,B)
 	print(len(circ_walk))
@@ -45,12 +45,12 @@ def main(nodes,clusters,vert1,vert2):
 
 	
 if __name__ == '__main__':
-	# circ_06_to_10 =main(nodes,clusters,vert_06,vert_10)
-	# circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
-	circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
+	circ_06_to_10 =main(nodes,clusters,vert_06,vert_10)
+	circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
+	# circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
 
-	# savetxt('2006_to_2010_circuitwalk.csv',circ_06_to_10,delimiter = ',')
-	# savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
-	savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
+	savetxt('2006_to_2010_circuitwalk.csv',circ_06_to_10,delimiter = ',')
+	savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
+	# savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
 
 
