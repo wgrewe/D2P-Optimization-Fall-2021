@@ -1,4 +1,5 @@
 import numpy as np
+import sys as sys
 
 def circuit_walk(vert1,vert2, circuits, B):
 	'''
@@ -11,41 +12,37 @@ def circuit_walk(vert1,vert2, circuits, B):
 	zero = np.zeros(len(vert1))
 	end = vert2-vert1
 	circ_set = []
-	picked_circs = []
-	lamb = []
 
 	count = 0
 
+	# B_end = B.dot(np.transpose(end))
 
-	while not np.array_equiv(zero, end):
-		B_end = B.dot(np.transpose(end))
+	while not np.array_equiv(zero,end):
+		B_end = B.dot(end)
 		for g in circuits[count:]:
-			print('g:', g)
 			count += 1
 
-			# print('len circuits:', len(circuits))
-			# print('count:', count)
 			if count == len(circuits):
 				print('no more circuits to pick')
 				print(circ_set)
+				sys.exit('Could not Complete Circuit Walk')
 			
 			# Checking Sign Compatibility
-
-			Bg = B.dot(np.array(np.transpose(g)))
-			# print('B_end type', type(np.transpose(B_end)[1]))
-			# print('Bg type', type(np.transpose(Bg)[1]))
-			sc_check1 = list(filter(lambda c: c < 0, (np.transpose(B_end)*np.transpose(Bg))))
-			sc_check2 = list(filter(lambda c: c < 0, end*g))
+			Bg = B.dot(np.array(np.transpose(np.array(g))))
+			sc_check1 = list(filter(lambda c: c < 0, (np.transpose(B_end)*Bg)[0]))
+			sc_check2 = list(filter(lambda c: c < 0,(np.transpose(end)*np.transpose(np.array(g)))[0]))
 			sc_check = sc_check1+sc_check2
 			if not sc_check:
 				vertex_zeros = set(np.where(end == 0)[0])
-				g_zeros = set(np.where(g == 0)[0])
+				g_zeros = set(np.where(np.array(g) == 0)[0])
+				# print('zeros check',vertex_zeros.issubset(g_zeros))
 				if vertex_zeros.issubset(g_zeros):
-					#picked_circs.append(list(g))
 					print('circuit selected and added')
-					end -= g
+					end -= np.array(g).reshape(len(end),1)
+					# print('end:',end)
 					circ_set.append(g)
 					break
+
 		# Adjustment if not 0/1-polytope
 		# for i in range(len(g)):
 		# 	if g[i] != 0:

@@ -99,6 +99,7 @@ def get_cycle_circuits(nodes,clusters):
 	circuits.sort()
 	print("finished sorting")
 	final_circuits = list(k for k,_ in it.groupby(circuits))
+	# final_cricuits = [np.array(x) for x in final_circuits]
 
 	# circuits_set = set(map(tuple,circuits))  #need to convert the inner lists to tuples so they are hashable
 	# print("converted to set")

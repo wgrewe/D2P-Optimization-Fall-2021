@@ -111,6 +111,7 @@ def get_sequential_circuits(nodes, clusters):
 	# print('circuits before groupby',circuits)
 	print("finished sorting")
 	final_circuits = list(k for k,_ in it.groupby(circuits))
+	# final_circuits = [np.array(x) for x in final_circuits]
 	# print('circuits after groupby',final_circuits)
 
 	# for i in range(num_paths):
