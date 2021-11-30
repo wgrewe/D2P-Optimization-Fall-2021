@@ -60,8 +60,8 @@ def sequential_paths(graph, nodes, clusters):
 		somePaths = depthFirst(graph, i, [])
 		paths += somePaths
 
-	filter_dup_paths = list(filter(lambda c: c[0] < c[-1], paths))
-	even_length_paths = list(filter(lambda c: len(c) % 2 == 1, filter_dup_paths))
+	# filter_dup_paths = list(filter(lambda c: c[0] < c[-1], paths))
+	even_length_paths = list(filter(lambda c: len(c) % 2 == 1, paths))
 	# paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
 	# dup_removed = list(paths_set)
 	# final_paths = [list(ele) for ele in dup_removed]
