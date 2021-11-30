@@ -51,12 +51,12 @@ def main(nodes,clusters,vert1,vert2):
 if __name__ == '__main__':
 	# main(nodes, clusters, vert1, vert2)
 
-	circ_06_to_10 =main(nodes,clusters,vert_06,vert_10)
-	# circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
-	# circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
+	# circ_06_to_10 =main(nodes,clusters,vert_06,vert_10)
+	circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
+	circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
 
-	savetxt('2006_to_2010_circuitwalk_maybe.csv',circ_06_to_10,delimiter = ',')
-	# savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
-	# savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
+	# savetxt('2006_to_2010_circuitwalk_maybe.csv',circ_06_to_10,delimiter = ',')
+	savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
+	savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
 
 
