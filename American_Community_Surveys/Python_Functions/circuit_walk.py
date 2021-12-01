@@ -12,7 +12,6 @@ def circuit_walk(vert1,vert2, circuits, B):
 	zero = np.zeros(len(vert1))
 	end = vert2-vert1
 	circ_set = []
-	picked_circs = []
 
 	count = 0
 
@@ -20,38 +19,35 @@ def circuit_walk(vert1,vert2, circuits, B):
 
 	while not np.array_equiv(zero,end):
 		B_end = B.dot(end)
-		for g in circuits:
+		for g in circuits[count:]:
 			count += 1
-			if g not in picked_circs:
-			
 
-				if count == len(circuits):
-					print('no more circuits to pick')
-					print(circ_set)
-					sys.exit('Could not Complete Circuit Walk')
+			if count == len(circuits):
+				print('no more circuits to pick')
+				print(circ_set)
+				sys.exit('Could not Complete Circuit Walk')
 			
 			# Checking Sign Compatibility
-				Bg = B.dot(np.array(np.transpose(np.array(g))))
+			Bg = B.dot(np.array(np.transpose(np.array(g))))
 			# print('B_end type:',type(B_end))
-			# print('Bg type:',type(Bg))
+			# print('Bg type:',Bg.shape)
 			# print('sc check 1:',(np.transpose(B_end)*Bg)[0])
 			# print('sc check 2:',(np.transpose(end)*np.transpose(np.array(g)))[0])
-				sc_check1 = list(filter(lambda c: c < 0, (np.transpose(B_end)*Bg)[0]))
-				sc_check2 = list(filter(lambda c: c < 0,(np.transpose(end)*np.transpose(np.array(g)))[0]))
-				sc_check = sc_check1+sc_check2
-				if not sc_check:
-					vertex_zeros = set(np.where(end == 0)[0])
-					g_zeros = set(np.where(np.array(g) == 0)[0])
-					# print('end',end)
-					# print('g', g)
-					# print('zeros check',vertex_zeros.issubset(g_zeros))
-					if vertex_zeros.issubset(g_zeros):
-						print('circuit selected and added')
-						end -= np.array(g).reshape(len(end),1)
-						picked_circs.append(g)
+			sc_check1 = list(filter(lambda c: c < 0, (np.transpose(B_end)*Bg)[0]))
+			sc_check2 = list(filter(lambda c: c < 0,(np.transpose(end)*np.transpose(np.array(g)))[0]))
+			sc_check = sc_check1+sc_check2
+			if not sc_check:
+				vertex_zeros = set(np.where(end == 0)[0])
+				g_zeros = set(np.where(np.array(g) == 0)[0])
+				print('end',end)
+				print('g', g)
+				print('zeros check',vertex_zeros.issubset(g_zeros))
+				if vertex_zeros.issubset(g_zeros):
+					print('circuit selected and added')
+					end -= np.array(g).reshape(len(end),1)
 					# print('end:',end)
-						circ_set.append(g)
-						break
+					circ_set.append(g)
+					break
 
 		# Adjustment if not 0/1-polytope
 		# for i in range(len(g)):

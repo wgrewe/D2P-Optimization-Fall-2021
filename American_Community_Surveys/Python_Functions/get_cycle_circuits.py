@@ -55,7 +55,7 @@ def cycles_graph(graph, nodes, clusters):
 		print("cycles for cluster ", i, "found") 
         
 	multi_vertex_paths = list(filter(lambda c: len(c) >= 4, paths))
-	even_length_paths = list(filter(lambda c: len(c) % 2 == 0 ,multi_vertex_paths))
+	even_length_paths = list(filter(lambda c: len(c) % 2 == 0, multi_vertex_paths))
 	final_cycles = even_length_paths
 	# final_cycles = list(set(even_length_paths))
 	paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
