@@ -8,6 +8,7 @@ import get_sequential_circuits as gsc
 import get_cycle_circuits as gcc
 import clust_to_vect as ctv
 from numpy import savetxt
+import implement_geographic_distance as igd
 
 
 clusters = 3
@@ -24,24 +25,36 @@ vert_06 = np.transpose(ctv.cluster_to_vector(cluster_06,clusters))
 vert_10 = np.transpose(ctv.cluster_to_vector(cluster_10,clusters))
 vert_15 = np.transpose(ctv.cluster_to_vector(cluster_15,clusters))
 
+dist_mat_06 = np.array(pd.read_csv('dist_mat_2006.csv', header = None))
+dist_mat_10 = np.array(pd.read_csv('dist_mat_2006.csv', header = None))
+dist_mat_15 = np.array(pd.read_csv('dist_mat_2006.csv', header = None))
+
+
 # vert1 = np.array([1,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,1])
 # vert2 = np.array([1,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,1,0])
 # nodes = 6
 # vert1 = vert_06
 # vert2 = vert_10
 nodes = len(cluster_06)
-# print(cluster_06)
-# print(ctv.cluster_to_vector(cluster_06,clusters))
 
-def main(nodes,clusters,vert1,vert2):
+
+def main(nodes,clusters,vert1,vert2, dist_mat, max_dist):
+	### getting circuits
 	seq_circuits = gsc.get_sequential_circuits(nodes,clusters)
 	graph = gcc.build_graph(nodes, clusters)
 	cyc_circuits = gcc.get_cycle_circuits(nodes, clusters)
-	# print('cycle circuits:',cyc_circuits)
 	circuits = seq_circuits+cyc_circuits
 	print('total number of circuits', len(circuits))
+		###sorting circuits by distance###
+	no_zeros = igd.filter_by_zeros(vert1,circuits)
+	circ_distances = idg.get_all_circuit_dists(no_zeros, dist_mat, clusters, max_dist)
+	sorted_circs = idg.sort_circuits(no_zeros, circ_distnaces)
+
+
+	### performing circuit walk
 	B = cm.constraint_mat(nodes,clusters)
-	circ_walk = cw.circuit_walk(vert1,vert2,circuits,B)
+	circ_walk = cw.circuit_walk(vert1,vert2,sorted_circs,B)
+
 	print(len(circ_walk))
 	# print(circ_walk)
 	return circ_walk
@@ -51,12 +64,15 @@ def main(nodes,clusters,vert1,vert2):
 if __name__ == '__main__':
 	# main(nodes, clusters, vert1, vert2)
 
-	# circ_06_to_10 =main(nodes,clusters,vert_06,vert_10)
-	circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
-	circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
+	max_dist = max(dist_mat_06)
+	circ_06_to_10 =main(nodes,clusters,vert_06,vert_10, dist_mat, max_dist)
+	# max_dist = max(dist_mat_10)
+	# circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
+	# max_dist = max(dist_mat_15)
+	# circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
 
-	# savetxt('2006_to_2010_circuitwalk_maybe.csv',circ_06_to_10,delimiter = ',')
-	savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
-	savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
+	# savetxt('2006_to_2010_circuitwalk.csv',circ_06_to_10,delimiter = ',')
+	# savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
+	# savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
 
 
