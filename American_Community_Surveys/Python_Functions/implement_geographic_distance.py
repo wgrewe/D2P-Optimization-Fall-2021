@@ -44,6 +44,8 @@ def sort_circuits(circuits, dist):
 
 	sorted_with_dists = sorted(zip(circuits, dist),key=lambda x: x[1])
 	sorted_circs = np.array([x[0] for x in sorted_with_dists])
+	print('Circuits Have Been Sorted')
+	print('New Total Number of Circuits', len(sorted_circs))
 	return sorted_circs
 
 def neighbor_indices(circuit, num_clusters):
@@ -75,20 +77,16 @@ def get_circuit_dist(circuit, dist_mat, num_clusters, max_dist):
 	'''
 	if isinstance(circuit, list):
 		circuit = np.array(circuit)
-	# print('circuit', circuit)
+
 	indices = neighbor_indices(circuit, num_clusters)
-	# print ('indicies',indices)
+
 	if len(indices) == 1:
 		return 2*max_dist
+
 	candidate_dist = []
-	# print(type(dist_mat))
 	for pair in it.combinations(indices,2):
-		# print('pair',pair)
-		# print(dist_mat[pair[0],pair[1]])
 		dist = dist_mat[pair[0],pair[1]]
-		# print (dist)
 		candidate_dist.append(dist)
-		# print('candidate dist', candidate_dist)
 
 	dist = min(candidate_dist)
 	return dist
@@ -109,18 +107,7 @@ def get_all_circuit_dists(circuits, dist_mat, num_clusters, max_dist):
 	if isinstance(circuits, np.ndarray):
 		circuits = list(circuits)
 	dists = [get_circuit_dist(circ, dist_mat, num_clusters, max_dist) for circ in circuits]
-	print('get all circuit distnaces finished', len(dists))
 	return dists
-
-
-
-# num_clusters = 2
-# # circuit = np.array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-# # # 0, 2, 4
-# dist_mat = [[0, 1, 2, 3, 4], [1, 0, 3, 5, 7], [2, 3, 0, 6, 8], [3, 5, 6, 0, 1], [4, 7, 8, 1, 0]]
-# max_dist = 20
-
-# print(get_circuit_dist(circuit, dist_mat, num_clusters, max_dist))
 
 
 

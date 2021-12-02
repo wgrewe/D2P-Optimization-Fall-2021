@@ -57,7 +57,6 @@ def cycles_graph(graph, nodes, clusters):
 	multi_vertex_paths = list(filter(lambda c: len(c) >= 4, paths))
 	even_length_paths = list(filter(lambda c: len(c) % 2 == 0, multi_vertex_paths))
 	final_cycles = even_length_paths
-	# final_cycles = list(set(even_length_paths))
 	paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
 	dup_removed = list(paths_set)
 	final_cycles = [list(ele) for ele in dup_removed]
@@ -65,7 +64,6 @@ def cycles_graph(graph, nodes, clusters):
 	for cycle in final_cycles:
 		cycle.append(cycle[0])  
    
-	# print("Graph Cycles Found")
 	return final_cycles
 
 def get_cycle_circuits(nodes,clusters):
@@ -99,15 +97,8 @@ def get_cycle_circuits(nodes,clusters):
 	circuits.sort()
 	print("finished sorting")
 	final_circuits = list(k for k,_ in it.groupby(circuits))
-	# final_cricuits = [np.array(x) for x in final_circuits]
 
-	# circuits_set = set(map(tuple,circuits))  #need to convert the inner lists to tuples so they are hashable
-	# print("converted to set")
-	# circ_list = list(paths_set)
-	# print("Back to a list of tuples")
-	# final_circuits = list(map(list,circ_list))
 	print("Cycle Circuits Finished")
-	print(len(final_circuits), " total circuits")
 	return final_circuits
 
 

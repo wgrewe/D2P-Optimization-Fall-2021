@@ -60,17 +60,11 @@ def sequential_paths(graph, nodes, clusters):
 		somePaths = depthFirst(graph, i, [])
 		paths += somePaths
 
-	# filter_dup_paths = list(filter(lambda c: c[0] < c[-1], paths))
 	min_length = list(filter(lambda c: len(c)>=2, paths))
 	even_length_paths = list(filter(lambda c: len(c) % 2 == 1, min_length))
-	# paths_set = set(map(tuple,even_length_paths))  #need to convert the inner lists to tuples so they are hashable
-	# dup_removed = list(paths_set)
-	# final_paths = [list(ele) for ele in dup_removed]
 
 	return even_length_paths
 
-# 5 neighborhoods [0,..,4], 3 clusters [5, 6, 7]
-# Path example = [5, 0, 6] <- start on cluster/end on cluster
 
 def get_sequential_circuits(nodes, clusters):
 	'''
@@ -84,10 +78,12 @@ def get_sequential_circuits(nodes, clusters):
 	Then add the negative circuit.
 	'''
 	graph = build_graph(nodes, clusters)
+	print("Graph Built")
 	paths = sequential_paths(graph, nodes, clusters)
+	print("Sequential Paths Finished")
+	print(len(paths), " sequential paths found")
 
 	num_paths = len(paths)
-	print(num_paths)
 	circuits = []
 
 	for path in paths:
@@ -109,26 +105,10 @@ def get_sequential_circuits(nodes, clusters):
 	print("Finished creating circuits. Now deduplicating.")
 
 	circuits.sort()
-	# print('circuits before groupby',circuits)
+
 	print("finished sorting")
 	final_circuits = list(k for k,_ in it.groupby(circuits))
-	# final_circuits = [np.array(x) for x in final_circuits]
-	# print('circuits after groupby',final_circuits)
 
-	# for i in range(num_paths):
-	# 	path = paths[i]
-	# 	pos_circ = np.zeros(nodes*clusters)
-
-	# 	#Entry (i*C <- number of clusters) + j denotes variable x_ij for i assigned to j
-
-	# 	odd_step = [path[i+1]*clusters + (path[i] - nodes) for i in range(0, len(path)-1, 2)]
-	# 	even_step = [path[i]*clusters + (path[i+1] - nodes) for i in range(1, len(path)-1, 2)]
-
-	# 	pos_circ[odd_step] = -1
-	# 	pos_circ[even_step] = 1
-	# 	neg_circ = -1*pos_circ
-	# 	circuits.append(pos_circ)
-	# 	circuits.append(neg_circ)
 
 	print("Seq Circuits Finished")
 	return final_circuits
