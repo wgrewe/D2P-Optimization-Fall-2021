@@ -33,8 +33,6 @@ dist_mat_15 = np.array(pd.read_csv('dist_mat_2006.csv', header = None))
 # vert1 = np.array([1,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,1])
 # vert2 = np.array([1,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,1,0])
 # nodes = 6
-# vert1 = vert_06
-# vert2 = vert_10
 nodes = len(cluster_06)
 
 
@@ -46,9 +44,11 @@ def main(nodes,clusters,vert1,vert2, dist_mat, max_dist):
 	circuits = seq_circuits+cyc_circuits
 	print('total number of circuits', len(circuits))
 		###sorting circuits by distance###
-	no_zeros = igd.filter_by_zeros(vert1,circuits)
-	circ_distances = idg.get_all_circuit_dists(no_zeros, dist_mat, clusters, max_dist)
-	sorted_circs = idg.sort_circuits(no_zeros, circ_distnaces)
+	no_zeros = igd.filter_by_zeros(vert2-vert1,circuits)
+	circ_distances = igd.get_all_circuit_dists(no_zeros, dist_mat, clusters, max_dist)
+	sorted_circs = igd.sort_circuits(no_zeros, circ_distances)
+	print('circuits sorted finished')
+	print('Total number of sorted circuits',len(sorted_circs))
 
 
 	### performing circuit walk
@@ -64,15 +64,15 @@ def main(nodes,clusters,vert1,vert2, dist_mat, max_dist):
 if __name__ == '__main__':
 	# main(nodes, clusters, vert1, vert2)
 
-	max_dist = max(dist_mat_06)
-	circ_06_to_10 =main(nodes,clusters,vert_06,vert_10, dist_mat, max_dist)
-	# max_dist = max(dist_mat_10)
-	# circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
-	# max_dist = max(dist_mat_15)
-	# circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
+	max_dist = dist_mat_06.max()
+	circ_06_to_10 =main(nodes,clusters,vert_06,vert_10, dist_mat_06, max_dist)
+	max_dist = dist_mat_10.max()
+	circ_10_to_15 =main(nodes,clusters,vert_10,vert_15, dist_mat_10, max_dist)
+	max_dist = dist_mat_15.max()
+	circ_06_to_15 =main(nodes,clusters,vert_06,vert_15, dist_mat_15, max_dist)
 
-	# savetxt('2006_to_2010_circuitwalk.csv',circ_06_to_10,delimiter = ',')
-	# savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
-	# savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
+	savetxt('2006_to_2010_circuitwalk_geo.csv',circ_06_to_10,delimiter = ',')
+	savetxt('2010_to_2015_circuitwalk_geo.csv',circ_10_to_15,delimiter = ',')
+	savetxt('2006_to_2015_circuitwalk_geo.csv',circ_06_to_15,delimiter = ',')
 
 

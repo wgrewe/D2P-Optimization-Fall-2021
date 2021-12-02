@@ -10,4 +10,6 @@ def constraint_mat(nodes, clusters):
 		for j in range(nodes):
 			B[i,j*clusters+i] = 1
 
+	print('constraint matrix finished')
+
 	return B

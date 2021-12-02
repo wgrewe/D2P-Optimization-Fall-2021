@@ -1,7 +1,7 @@
 import numpy as np 
 import itertools as it
 
-def filter_by_zeros(vertex, circuits):
+def filter_by_zeros(vertex_diff, circuits):
 	'''
 	input: vertex <array float> the ending vertex of circuit walk.
 	circuits <array float> the set of circuits for the problem.
@@ -14,13 +14,20 @@ def filter_by_zeros(vertex, circuits):
 	If vertex zeros are a subset of circ zeros add them to the list of 
 	circuits to be returned (sc_circuits)
 	'''
+	if isinstance(circuits, np.ndarray):
+		circuits = list(circuits)
+	if isinstance(vertex_diff, list):
+		vertex_diff = np.array(vertex_diff)
 
-	vertex_zeros = set(np.where(vertex == 0)[0]) # indices of vertex zeros
+	vertex_zeros = set(np.where(vertex_diff == 0)[0]) # indices of vertex zeros
 	sc_circuits = []
 	for circuit in circuits:
+		if isinstance(circuit, list):
+			circuit = np.array(circuit)
 		circ_zeros = set(np.where(circuit == 0)[0])
 		if vertex_zeros.issubset(circ_zeros):
 			sc_circuits.append(circuit)
+	print('filter by zeros finished', len(np.array(sc_circuits)))
 	return np.array(sc_circuits)
 
 def sort_circuits(circuits, dist):
@@ -68,16 +75,20 @@ def get_circuit_dist(circuit, dist_mat, num_clusters, max_dist):
 	'''
 	if isinstance(circuit, list):
 		circuit = np.array(circuit)
-
+	# print('circuit', circuit)
 	indices = neighbor_indices(circuit, num_clusters)
-	print (indices)
+	# print ('indicies',indices)
 	if len(indices) == 1:
-		return max_dist
+		return 2*max_dist
 	candidate_dist = []
+	# print(type(dist_mat))
 	for pair in it.combinations(indices,2):
-		dist = dist_mat[pair[0]][pair[1]]
-		print (dist)
+		# print('pair',pair)
+		# print(dist_mat[pair[0],pair[1]])
+		dist = dist_mat[pair[0],pair[1]]
+		# print (dist)
 		candidate_dist.append(dist)
+		# print('candidate dist', candidate_dist)
 
 	dist = min(candidate_dist)
 	return dist
@@ -98,6 +109,7 @@ def get_all_circuit_dists(circuits, dist_mat, num_clusters, max_dist):
 	if isinstance(circuits, np.ndarray):
 		circuits = list(circuits)
 	dists = [get_circuit_dist(circ, dist_mat, num_clusters, max_dist) for circ in circuits]
+	print('get all circuit distnaces finished', len(dists))
 	return dists
 
 
@@ -109,11 +121,6 @@ def get_all_circuit_dists(circuits, dist_mat, num_clusters, max_dist):
 # max_dist = 20
 
 # print(get_circuit_dist(circuit, dist_mat, num_clusters, max_dist))
-
-circuits = np.array([[1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 0, 1]])
-
-
-
 
 
 
