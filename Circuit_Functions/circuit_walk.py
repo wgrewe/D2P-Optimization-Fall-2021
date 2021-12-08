@@ -17,12 +17,13 @@ def circuit_walk(vert1,vert2, circuits, B):
 
 	while not np.array_equiv(zero,end):
 		B_end = B.dot(end)
-		for g in circuits[count:]:
-			count += 1
+		for g in circuits:
+			# count += 1
 
-			if count == len(circuits):
-				print('no more circuits to pick')
-				sys.exit('Could not Complete Circuit Walk')
+			# if count == len(circuits):
+			# 	print('no more circuits to pick')
+			# 	print(circ_set)
+			# 	sys.exit('Could not Complete Circuit Walk')
 			
 			# Checking Sign Compatibility
 			Bg = B.dot(np.array(np.transpose(np.array(g))))
@@ -33,7 +34,7 @@ def circuit_walk(vert1,vert2, circuits, B):
 			if not sc_check:
 				vertex_zeros = set(np.where(end == 0)[0])
 				g_zeros = set(np.where(np.array(g) == 0)[0])
-				# print('end',end)
+				print('end',np.transpose(end))
 				# print('g', g)
 				# print('zeros check',vertex_zeros.issubset(g_zeros))
 				if vertex_zeros.issubset(g_zeros):

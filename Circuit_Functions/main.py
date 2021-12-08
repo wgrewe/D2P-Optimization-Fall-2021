@@ -15,6 +15,11 @@ cluster_06 = np.array(pd.read_csv("https://raw.githubusercontent.com/wgrewe/D2P-
 cluster_10 = np.array(pd.read_csv("https://raw.githubusercontent.com/wgrewe/D2P-Optimization-Fall-2021/main/Data/2010_clusters.csv", header = None)).astype(int)
 cluster_15 = np.array(pd.read_csv("https://raw.githubusercontent.com/wgrewe/D2P-Optimization-Fall-2021/main/Data/2015_clusters.csv", header = None)).astype(int)
 
+clusters = 3
+nodes = len(cluster_06)
+visitedList= []
+circuits = []
+
 # ##convert cluster assignments to vectors in the polyhedron space
 vert_06 = np.transpose(ctv.cluster_to_vector(cluster_06,clusters))
 vert_10 = np.transpose(ctv.cluster_to_vector(cluster_10,clusters))
@@ -24,11 +29,6 @@ vert_15 = np.transpose(ctv.cluster_to_vector(cluster_15,clusters))
 dist_mat_06 = np.array(pd.read_csv("https://raw.githubusercontent.com/wgrewe/D2P-Optimization-Fall-2021/main/Data/dist_mat_2006.csv", header = None))
 dist_mat_10 = np.array(pd.read_csv("https://raw.githubusercontent.com/wgrewe/D2P-Optimization-Fall-2021/main/Data/dist_mat_2006.csv", header = None))
 dist_mat_15 = np.array(pd.read_csv("https://raw.githubusercontent.com/wgrewe/D2P-Optimization-Fall-2021/main/Data/dist_mat_2006.csv", header = None))
-
-clusters = 3
-nodes = len(cluster_06)
-visitedList= []
-circuits = []
 
 ###test case
 # vert1 = np.array([1,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,1])
@@ -73,15 +73,15 @@ def main_geo(nodes,clusters,vert1,vert2, dist_mat, max_dist):
 
 	
 if __name__ == '__main__':
-	### Without Geogrpahic Info ###
-	circ_06_to_10 =main(nodes,clusters,vert_06,vert_10)
-	circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
-	circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
+	# ### Without Geogrpahic Info ###
+	# circ_06_to_10 =main(nodes,clusters,vert_06,vert_10)
+	# circ_10_to_15 =main(nodes,clusters,vert_10,vert_15)
+	# circ_06_to_15 =main(nodes,clusters,vert_06,vert_15)
 
-	#save walks
-	savetxt('2006_to_2010_circuitwalk.csv',circ_06_to_10,delimiter = ',')
-	savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
-	savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
+	# #save walks
+	# savetxt('2006_to_2010_circuitwalk.csv',circ_06_to_10,delimiter = ',')
+	# savetxt('2010_to_2015_circuitwalk.csv',circ_10_to_15,delimiter = ',')
+	# savetxt('2006_to_2015_circuitwalk.csv',circ_06_to_15,delimiter = ',')
 
 	### With Geogrpahic Info ###
 	max_dist = dist_mat_06.max()
@@ -95,5 +95,3 @@ if __name__ == '__main__':
 	savetxt('2006_to_2010_circuitwalk_geo.csv',circ_06_to_10_geo,delimiter = ',')
 	savetxt('2010_to_2015_circuitwalk_geo.csv',circ_10_to_15_geo,delimiter = ',')
 	savetxt('2006_to_2015_circuitwalk_geo.csv',circ_06_to_15_geo,delimiter = ',')
-
-
